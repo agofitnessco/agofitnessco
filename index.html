@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AGo — Ropa Deportiva Mexicana</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─────────────────────────────────────────────
+       RESET & BASE
+    ───────────────────────────────────────────── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --cream:   #fbf9f3;
+      --blue:    #4144AA;
+      --blue-dk: #32359a;
+      --rose:    #b48b8c;
+      --rose-lt: #ede0e0;
+      --ink:     #1a1a2e;
+      --muted:   #6b6b80;
+      --radius:  10px;
+      --trans:   all 0.3s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', Helvetica, Arial, sans-serif;
+      background-color: var(--cream);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { display: block; max-width: 100%; }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ─────────────────────────────────────────────
+       UTILIDADES
+    ───────────────────────────────────────────── */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin-inline: auto;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 100px;
+      background: var(--rose-lt);
+      color: var(--rose);
+      margin-bottom: 16px;
+    }
+
+    .tag--blue {
+      background: rgba(65, 68, 170, 0.1);
+      color: var(--blue);
+    }
+
+    /* ─────────────────────────────────────────────
+       1. NAVBAR
+    ───────────────────────────────────────────── */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(251, 249, 243, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(180, 139, 140, 0.18);
+    }
+
+    .navbar__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+    }
+
+    .navbar__logo img {
+      height: 38px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    /* Burger button — visible solo en móvil */
+    .navbar__burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .navbar__burger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--ink);
+      border-radius: 2px;
+      transition: var(--trans);
+    }
+
+    .navbar__nav {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .navbar__nav a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      transition: var(--trans);
+      position: relative;
+    }
+
+    .navbar__nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--blue);
+      border-radius: 2px;
+      transition: var(--trans);
+    }
+
+    .navbar__nav a:hover {
+      color: var(--blue);
+    }
+    .navbar__nav a:hover::after {
+      width: 100%;
+    }
+
+    /* ─────────────────────────────────────────────
+       2. HERO
+    ───────────────────────────────────────────── */
+    .hero {
+      min-height: calc(100vh - 74px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 60px;
+      padding: 80px 0;
+    }
+
+    .hero__content {
+      max-width: 540px;
+    }
+
+    .hero__eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .hero__eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--rose);
+      flex-shrink: 0;
+    }
+
+    .hero__eyebrow-text {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--rose);
+    }
+
+    .hero__title {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 900;
+      line-height: 1.07;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+
+    .hero__title span {
+      color: var(--blue);
+    }
+
+    .hero__desc {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 40px;
+      max-width: 440px;
+    }
+
+    .hero__actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--trans);
+      border: 2px solid transparent;
+      white-space: nowrap;
+    }
+
+    .btn--primary {
+      background: var(--blue);
+      color: #fff;
+    }
+    .btn--primary:hover {
+      background: var(--blue-dk);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(65, 68, 170, 0.28);
+    }
+
+    .btn--outline {
+      background: transparent;
+      border-color: var(--rose);
+      color: var(--rose);
+    }
+    .btn--outline:hover {
+      background: var(--rose-lt);
+      transform: translateY(-2px);
+    }
+
+    .btn--ghost {
+      background: var(--rose-lt);
+      color: var(--rose);
+      border-color: transparent;
+    }
+    .btn--ghost:hover {
+      background: #ddc8c8;
+      transform: translateY(-2px);
+    }
+
+    .hero__image-wrap {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      box-shadow: 0 32px 80px rgba(26, 26, 46, 0.14);
+    }
+
+    .hero__image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .hero__image-wrap:hover img {
+      transform: scale(1.03);
+    }
+
+    .hero__badge {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      background: rgba(251, 249, 243, 0.92);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .hero__badge-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .hero__badge-text strong {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .hero__badge-text span {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    /* ─────────────────────────────────────────────
+       SECTION COMMONS
+    ───────────────────────────────────────────── */
+    section {
+      padding: 100px 0;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 620px;
+      margin: 0 auto 64px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.12;
+      margin-bottom: 16px;
+    }
+
+    .section-header p {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.72;
+    }
+
+    /* ─────────────────────────────────────────────
+       3. VISIÓN
+    ───────────────────────────────────────────── */
+    .vision {
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .vision__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .vision__content .tag {
+      background: rgba(180, 139, 140, 0.18);
+      color: var(--rose);
+    }
+
+    .vision__title {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      margin-bottom: 24px;
+      color: #fff;
+    }
+
+    .vision__title span {
+      color: var(--rose);
+    }
+
+    .vision__text {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.62);
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+
+    .vision__stats {
+      display: flex;
+      gap: 40px;
+    }
+
+    .vision__stat strong {
+      display: block;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--rose);
+      letter-spacing: -0.04em;
+    }
+
+    .vision__stat span {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .vision__image-wrap {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+    }
+
+    .vision__image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .vision__accent {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: var(--blue);
+      opacity: 0.5;
+      filter: blur(40px);
+    }
+
+    /* ─────────────────────────────────────────────
+       4. MARCAS
+    ───────────────────────────────────────────── */
+    #marcas {
+      background: var(--cream);
+    }
+
+    .brands__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .brand-card {
+      background: #fff;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(26,26,46,0.06);
+      transition: var(--trans);
+    }
+
+    .brand-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(26,26,46,0.12);
+    }
+
+    .brand-card__image {
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .brand-card__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .brand-card:hover .brand-card__image img {
+      transform: scale(1.06);
+    }
+
+    .brand-card__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(26,26,46,0.5) 0%, transparent 60%);
+    }
+
+    .brand-card__logo-wrap {
+      position: absolute;
+      bottom: 20px;
+      left: 24px;
+    }
+
+    .brand-card__logo-text {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.04em;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .brand-card__body {
+      padding: 28px 28px 32px;
+    }
+
+    .brand-card__title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--ink);
+    }
+
+    .brand-card__desc {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.72;
+      margin-bottom: 24px;
+    }
+
+    .brand-card__pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 100px;
+      border: 1.5px solid;
+    }
+
+    .pill--blue {
+      border-color: rgba(65, 68, 170, 0.25);
+      color: var(--blue);
+      background: rgba(65, 68, 170, 0.06);
+    }
+
+    .pill--rose {
+      border-color: rgba(180, 139, 140, 0.3);
+      color: var(--rose);
+      background: rgba(180, 139, 140, 0.07);
+    }
+
+    /* ─────────────────────────────────────────────
+       5. CATÁLOGO / GALERÍA
+    ───────────────────────────────────────────── */
+    .catalog {
+      background: #f3f1eb;
+    }
+
+    .catalog__cta {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 56px;
+    }
+
+    .btn--catalog {
+      background: var(--ink);
+      color: #fff;
+      padding: 16px 32px;
+      font-size: 0.95rem;
+    }
+    .btn--catalog:hover {
+      background: var(--blue);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(65, 68, 170, 0.3);
+    }
+
+    .btn--catalog-rose {
+      background: var(--rose);
+      color: #fff;
+      padding: 16px 32px;
+      font-size: 0.95rem;
+    }
+    .btn--catalog-rose:hover {
+      background: #9e7172;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(180, 139, 140, 0.35);
+    }
+
+    .btn svg {
+      flex-shrink: 0;
+    }
+
+    .gallery__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto;
+      gap: 16px;
+    }
+
+    .gallery__item {
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .gallery__item:first-child {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    .gallery__item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .gallery__item:hover img {
+      transform: scale(1.05);
+    }
+
+    /* Aspect ratios per item */
+    .gallery__item:not(:first-child) {
+      aspect-ratio: 4/3;
+    }
+    .gallery__item:first-child {
+      aspect-ratio: 4/3;
+    }
+
+    .gallery__item__label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 12px 16px;
+      background: linear-gradient(to top, rgba(26,26,46,0.6) 0%, transparent);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: var(--trans);
+    }
+
+    .gallery__item:hover .gallery__item__label {
+      opacity: 1;
+    }
+
+    /* ─────────────────────────────────────────────
+       6. CTA / CONTACTO
+    ───────────────────────────────────────────── */
+    .contact {
+      background: var(--cream);
+    }
+
+    .contact__box {
+      background: var(--ink);
+      border-radius: 24px;
+      padding: 80px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact__box::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: var(--blue);
+      opacity: 0.18;
+      filter: blur(60px);
+    }
+
+    .contact__box::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      left: -60px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: var(--rose);
+      opacity: 0.18;
+      filter: blur(50px);
+    }
+
+    .contact__box > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact__tag {
+      background: rgba(180, 139, 140, 0.2);
+      color: var(--rose);
+    }
+
+    .contact__title {
+      font-size: clamp(1.7rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 16px;
+      line-height: 1.12;
+    }
+
+    .contact__desc {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.58);
+      max-width: 480px;
+      margin: 0 auto 40px;
+      line-height: 1.75;
+    }
+
+    .btn--whatsapp {
+      background: #25D366;
+      color: #fff;
+      padding: 18px 40px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(37, 211, 102, 0.35);
+    }
+
+    .btn--whatsapp:hover {
+      background: #1db954;
+      transform: translateY(-3px);
+      box-shadow: 0 14px 40px rgba(37, 211, 102, 0.45);
+    }
+
+    .contact__info {
+      margin-top: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.82rem;
+    }
+
+    .contact__info-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #25D366;
+      flex-shrink: 0;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    /* ─────────────────────────────────────────────
+       7. FOOTER
+    ───────────────────────────────────────────── */
+    .footer {
+      background: var(--ink);
+      color: rgba(255,255,255,0.45);
+      padding: 48px 0;
+    }
+
+    .footer__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer__brand img {
+      height: 28px;
+      width: auto;
+      opacity: 0.7;
+      filter: brightness(10);
+      margin-bottom: 8px;
+    }
+
+    .footer__brand p {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .footer__links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .footer__links a {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.45);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--trans);
+    }
+
+    .footer__links a:hover {
+      color: rgba(255,255,255,0.9);
+    }
+
+    .footer__copy {
+      font-size: 0.78rem;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 24px;
+      margin-top: 24px;
+      color: rgba(255,255,255,0.28);
+    }
+
+    /* ─────────────────────────────────────────────
+       RESPONSIVE — MOBILE FIRST
+    ───────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 48px;
+        padding: 60px 0 80px;
+        min-height: auto;
+      }
+      .hero__content { max-width: 100%; }
+      .hero__image-wrap { max-width: 500px; margin: 0 auto; }
+
+      .vision__grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+      .vision__image-wrap { max-width: 480px; }
+    }
+
+    @media (max-width: 700px) {
+      .navbar__burger { display: flex; }
+
+      .navbar__nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: rgba(251, 249, 243, 0.97);
+        backdrop-filter: blur(14px);
+        padding: 24px 5%;
+        gap: 20px;
+        border-bottom: 1px solid rgba(180, 139, 140, 0.18);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.07);
+      }
+
+      .navbar__nav.open { display: flex; }
+      .navbar { position: relative; }
+
+      .brands__grid { grid-template-columns: 1fr; }
+
+      .gallery__grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .gallery__item:first-child {
+        grid-column: span 2;
+      }
+
+      .contact__box {
+        padding: 52px 28px;
+      }
+
+      .vision__stats { gap: 24px; }
+
+      .footer__inner { flex-direction: column; align-items: flex-start; }
+      .footer__links { flex-wrap: wrap; gap: 16px; }
+    }
+
+    @media (max-width: 460px) {
+      section { padding: 72px 0; }
+
+      .hero__title { font-size: 2.2rem; }
+      .hero__actions { flex-direction: column; }
+      .hero__actions .btn { justify-content: center; }
+
+      .gallery__grid { grid-template-columns: 1fr; }
+      .gallery__item:first-child { grid-column: span 1; }
+
+      .catalog__cta { flex-direction: column; }
+      .catalog__cta .btn { justify-content: center; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       1. NAVBAR
+  ═══════════════════════════════════════════ -->
+  <header class="navbar">
+    <div class="container navbar__inner">
+
+      <a class="navbar__logo" href="#" aria-label="AGo Inicio">
+        <!-- REEMPLAZA src con la ruta de tu logo: ej. src="assets/logo-ago.png" -->
+        <img src="logo-ago.png" alt="AGo — Ropa Deportiva Mexicana" />
+      </a>
+
+      <button class="navbar__burger" id="burgerBtn" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav aria-label="Navegación principal">
+        <ul class="navbar__nav" id="navMenu">
+          <li><a href="#vision">Visión</a></li>
+          <li><a href="#marcas">Marcas</a></li>
+          <li><a href="#catalogo">Catálogo</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+
+    </div>
+  </header>
+
+
+  <!-- ═══════════════════════════════════════════
+       2. HERO
+  ═══════════════════════════════════════════ -->
+  <main>
+    <section id="inicio" aria-label="Presentación AGo">
+      <div class="container hero">
+
+        <div class="hero__content">
+          <div class="hero__eyebrow">
+            <span class="hero__eyebrow-dot" aria-hidden="true"></span>
+            <span class="hero__eyebrow-text">Marca Mexicana · Hecho para moverse</span>
+          </div>
+
+          <h1 class="hero__title">
+            Viste el<br />
+            <span>movimiento.</span><br />
+            Vive el ritmo.
+          </h1>
+
+          <p class="hero__desc">
+            AGo redefine la ropa deportiva en México: accesible, con estilo
+            propio y construida para el día a día. De la cancha al street,
+            sin comprometer rendimiento ni diseño.
+          </p>
+
+          <div class="hero__actions">
+            <a href="#marcas" class="btn btn--primary">
+              <!-- Icono flecha -->
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+              Ver marcas
+            </a>
+            <a href="#contacto" class="btn btn--outline">Comprar vía WhatsApp</a>
+          </div>
+        </div>
+
+        <div class="hero__image-wrap">
+          <!--
+            REEMPLAZA src con tu imagen principal.
+            Medida sugerida: 800×1000px aprox. Formato: JPG/WebP.
+            Ejemplo: src="assets/hero-atleta.jpg"
+          -->
+          <img
+            src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=900&q=85&auto=format&fit=crop"
+            alt="Atleta con ropa deportiva AGo"
+            loading="eager"
+          />
+
+          <div class="hero__badge">
+            <div class="hero__badge-icon" aria-hidden="true">
+              <!-- Icono estrella/destello -->
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.3L12 17l-6.2 4.2 2.4-7.3L2 9.4h7.6z"/></svg>
+            </div>
+            <div class="hero__badge-text">
+              <strong>2 Marcas Premium</strong>
+              <span>GymCo &amp; Kisu</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         3. VISIÓN
+    ═══════════════════════════════════════════ -->
+    <section id="vision" class="vision" aria-label="Visión de AGo">
+      <div class="container vision__grid">
+
+        <div class="vision__content">
+          <span class="tag">Nuestra Visión</span>
+          <h2 class="vision__title">
+            Deporte sin<br />
+            <span>límites.</span><br />
+            Estilo sin excusas.
+          </h2>
+          <p class="vision__text">
+            En AGo creemos que el deporte no tiene clase social. Distribuimos
+            marcas de ropa técnica con el propósito de que cada mexicano pueda
+            entrenar, lucir y sentirse poderoso — sin pagar precios de élite.
+            Calidad real, diseño honesto, precio justo.
+          </p>
+          <div class="vision__stats">
+            <div class="vision__stat">
+              <strong>2</strong>
+              <span>Marcas propias</span>
+            </div>
+            <div class="vision__stat">
+              <strong>100%</strong>
+              <span>Atención personal</span>
+            </div>
+            <div class="vision__stat">
+              <strong>MX</strong>
+              <span>Hecho en México</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="vision__image-wrap">
+          <div class="vision__accent" aria-hidden="true"></div>
+          <!--
+            REEMPLAZA src con una imagen de ambiente/atleta.
+            Ejemplo: src="assets/vision-deporte.jpg"
+          -->
+          <img
+            src="https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=800&q=85&auto=format&fit=crop"
+            alt="Comunidad deportiva con ropa AGo"
+            loading="lazy"
+          />
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         4. MARCAS
+    ═══════════════════════════════════════════ -->
+    <section id="marcas" aria-label="Marcas GymCo y Kisu">
+      <div class="container">
+
+        <div class="section-header">
+          <span class="tag tag--blue">Nuestras Marcas</span>
+          <h2>Dos universos,<br />un mismo ADN deportivo</h2>
+          <p>Cada marca nace con un propósito claro para cubrir distintas necesidades dentro del mundo del deporte y el movimiento.</p>
+        </div>
+
+        <div class="brands__grid">
+
+          <!-- GYMCO -->
+          <article class="brand-card" aria-label="Marca GymCo">
+            <div class="brand-card__image">
+              <!--
+                REEMPLAZA src con imagen representativa de GymCo.
+                Ejemplo: src="assets/gymco-hero.jpg"
+              -->
+              <img
+                src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80&auto=format&fit=crop"
+                alt="Colección GymCo — entrenamiento y fuerza"
+                loading="lazy"
+              />
+              <div class="brand-card__overlay" aria-hidden="true"></div>
+              <div class="brand-card__logo-wrap">
+                <span class="brand-card__logo-text">GymCo</span>
+              </div>
+            </div>
+            <div class="brand-card__body">
+              <h3 class="brand-card__title">Entrena sin límites</h3>
+              <p class="brand-card__desc">
+                GymCo nació para los que no se detienen. Ropa técnica de alto
+                rendimiento diseñada para el gym, el box y el entrenamiento
+                funcional. Tejidos que respiran, cortes que no restringen.
+              </p>
+              <div class="brand-card__pills">
+                <span class="pill pill--blue">Fuerza</span>
+                <span class="pill pill--blue">Funcional</span>
+                <span class="pill pill--blue">Alto rendimiento</span>
+                <span class="pill pill--blue">Versatilidad</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- KISU -->
+          <article class="brand-card" aria-label="Marca Kisu">
+            <div class="brand-card__image">
+              <!--
+                REEMPLAZA src con imagen representativa de Kisu.
+                Ejemplo: src="assets/kisu-hero.jpg"
+              -->
+              <img
+                src="https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=800&q=80&auto=format&fit=crop"
+                alt="Colección Kisu — comodidad y diseño fresco"
+                loading="lazy"
+              />
+              <div class="brand-card__overlay" aria-hidden="true"></div>
+              <div class="brand-card__logo-wrap">
+                <span class="brand-card__logo-text">Kisu</span>
+              </div>
+            </div>
+            <div class="brand-card__body">
+              <h3 class="brand-card__title">Comodidad con carácter</h3>
+              <p class="brand-card__desc">
+                Kisu es la marca de quienes viven activos sin perder el estilo.
+                Prendas frescas y cómodas que acompañan desde el entrenamiento
+                matutino hasta la tarde en la ciudad. Diseño limpio, paletas
+                únicas y telas suaves al tacto.
+              </p>
+              <div class="brand-card__pills">
+                <span class="pill pill--rose">Comodidad</span>
+                <span class="pill pill--rose">Street style</span>
+                <span class="pill pill--rose">Diseño fresco</span>
+                <span class="pill pill--rose">Dinamismo</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         5. CATÁLOGO Y GALERÍA
+    ═══════════════════════════════════════════ -->
+    <section id="catalogo" class="catalog" aria-label="Catálogo y galería de productos">
+      <div class="container">
+
+        <div class="section-header">
+          <span class="tag">Catálogos 2025</span>
+          <h2>Explora las<br />colecciones completas</h2>
+          <p>Descarga o visualiza el catálogo de cada marca para ver todos los modelos, colores y referencias disponibles.</p>
+        </div>
+
+        <!-- Botones PDF -->
+        <div class="catalog__cta">
+          <a
+            href="CATALOGO ELEMENT_P_Publico (1) (1).pdf"
+            target="_blank"
+            rel="noopener"
+            class="btn btn--catalog"
+            aria-label="Ver catálogo completo de GymCo en PDF"
+          >
+            <!--
+              REEMPLAZA href con la ruta real a tu PDF de GymCo.
+              Ejemplo: href="catalogs/gymco-2025.pdf"
+            -->
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+            Ver Catálogo GymCo
+          </a>
+
+          <a
+            href="catalogo kisu 2025.pdf"
+            target="_blank"
+            rel="noopener"
+            class="btn btn--catalog-rose"
+            aria-label="Ver catálogo completo de Kisu en PDF"
+          >
+            <!--
+              REEMPLAZA href con la ruta real a tu PDF de Kisu.
+              Ejemplo: href="catalogs/kisu-2025.pdf"
+            -->
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+            Ver Catálogo Kisu
+          </a>
+        </div>
+
+        <!-- Galería -->
+        <div class="gallery__grid" role="list" aria-label="Galería de productos">
+
+          <div class="gallery__item" role="listitem">
+            <!--
+              REEMPLAZA con imagen de producto destacado.
+              Ejemplo: src="assets/gallery/featured.jpg"
+            -->
+            <img
+              src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=900&q=80&auto=format&fit=crop"
+              alt="Colección deportiva AGo — pieza destacada"
+              loading="lazy"
+            />
+            <div class="gallery__item__label">Colección 2025</div>
+          </div>
+
+          <div class="gallery__item" role="listitem">
+            <img
+              src="https://images.unsplash.com/photo-1581009137042-c552e485697a?w=600&q=80&auto=format&fit=crop"
+              alt="Shorts de entrenamiento GymCo"
+              loading="lazy"
+            />
+            <div class="gallery__item__label">GymCo — Training</div>
+          </div>
+
+          <div class="gallery__item" role="listitem">
+            <img
+              src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=80&auto=format&fit=crop"
+              alt="Conjunto deportivo Kisu"
+              loading="lazy"
+            />
+            <div class="gallery__item__label">Kisu — Street</div>
+          </div>
+
+          <div class="gallery__item" role="listitem">
+            <!--
+              REEMPLAZA con imagen de producto real.
+              Ejemplo: src="assets/gallery/product4.jpg"
+            -->
+            <img
+              src="https://images.unsplash.com/photo-1590736969596-3f0c5ebebebb?w=600&q=80&auto=format&fit=crop"
+              alt="Tops deportivos colección AGo"
+              loading="lazy"
+            />
+            <div class="gallery__item__label">AGo — Active</div>
+          </div>
+
+          <div class="gallery__item" role="listitem">
+            <img
+              src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&auto=format&fit=crop"
+              alt="Leggings de alto rendimiento GymCo"
+              loading="lazy"
+            />
+            <div class="gallery__item__label">GymCo — Power</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════
+         6. CTA / CONTACTO
+    ═══════════════════════════════════════════ -->
+    <section id="contacto" class="contact" aria-label="Contacto y pedidos via WhatsApp">
+      <div class="container">
+        <div class="contact__box">
+
+          <span class="tag contact__tag">Atención personalizada</span>
+
+          <h2 class="contact__title">
+            ¿Listo para hacer<br />tu pedido?
+          </h2>
+
+          <p class="contact__desc">
+            Toda la atención en AGo es 100% personal. Escríbenos directo
+            por WhatsApp para consultar disponibilidad, tallas, colores
+            y hacer tu pedido de forma rápida y segura.
+          </p>
+
+          <a
+            href="https://wa.me/TU_NUMERO_AQUI"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn--whatsapp"
+            aria-label="Contactar a AGo por WhatsApp"
+          >
+            <!--
+              REEMPLAZA el href con tu número real de WhatsApp.
+              Formato: https://wa.me/521XXXXXXXXXX (incluye código de país 52 para México)
+              Ejemplo: https://wa.me/5215512345678
+            -->
+            <!-- Icono WhatsApp SVG -->
+            <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Comprar vía WhatsApp
+          </a>
+
+          <div class="contact__info" aria-label="Estado de atención">
+            <span class="contact__info-dot" aria-hidden="true"></span>
+            Atención disponible · Respuesta rápida
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ═══════════════════════════════════════════
+       7. FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer class="footer" aria-label="Pie de página AGo">
+    <div class="container">
+      <div class="footer__inner">
+
+        <div class="footer__brand">
+          <!-- REEMPLAZA src con tu logo (versión blanca si tienes) -->
+          <img src="logo-ago.png" alt="AGo" />
+          <p>Marca mexicana de ropa deportiva · Distribuidora oficial de GymCo y Kisu</p>
+        </div>
+
+        <ul class="footer__links" aria-label="Redes sociales">
+          <li>
+            <a
+              href="https://instagram.com/ago_deportivo"
+              target="_blank"
+              rel="noopener"
+              aria-label="Instagram de AGo"
+            >
+              <!-- Icono Instagram -->
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              Instagram
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://facebook.com/ago_deportivo"
+              target="_blank"
+              rel="noopener"
+              aria-label="Facebook de AGo"
+            >
+              <!-- Icono Facebook -->
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              Facebook
+            </a>
+          </li>
+        </ul>
+
+      </div>
+
+      <p class="footer__copy">
+        © 2025 AGo — Todos los derechos reservados · Marca mexicana · Hecho con orgullo en México 🇲🇽
+      </p>
+    </div>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════
+       JS — Burger menu toggle (inline, sin deps)
+  ═══════════════════════════════════════════ -->
+  <script>
+    (function () {
+      const burger = document.getElementById('burgerBtn');
+      const nav    = document.getElementById('navMenu');
+
+      burger.addEventListener('click', function () {
+        const isOpen = nav.classList.toggle('open');
+        burger.setAttribute('aria-expanded', isOpen);
+      });
+
+      // Cierra el menú al hacer clic en un enlace
+      nav.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          nav.classList.remove('open');
+          burger.setAttribute('aria-expanded', 'false');
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>
